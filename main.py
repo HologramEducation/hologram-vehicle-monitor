@@ -5,8 +5,9 @@ import time
 
 import obd
 
+connection = obd.OBD() # auto-connects to USB or RF port
 
-from Adafruit_IO import MQTTClient 
+from Adafruit_IO import MQTTClient
 from Hologram.HologramCloud import HologramCloud
 
 ADAFRUIT_IO_KEY      = 'YOUR ADAFRUIT IO KEY'
@@ -31,5 +32,11 @@ client.loop_background()
 while True:
     hologram = HologramCloud(None, network='cellular')
     location = hologram.network.location
-    client.publish('DemoFeed', value)
+
+    cmd = obd.commands.SPEED # select an OBD command (sensor)
+    response = connection.query(cmd) # send the command, and parse the response
+    
+    data = { 'location': location, 'speed': response.value.to("mph") }
+
+    client.publish('fleet', data)
     time.sleep(60)
