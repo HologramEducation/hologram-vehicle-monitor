@@ -1,0 +1,35 @@
+# Import standard python modules.
+import random
+import sys
+import time
+
+import obd
+
+
+from Adafruit_IO import MQTTClient 
+from Hologram.HologramCloud import HologramCloud
+
+ADAFRUIT_IO_KEY      = 'YOUR ADAFRUIT IO KEY'
+ADAFRUIT_IO_USERNAME = 'YOUR ADAFRUIT IO USERNAME'
+
+def connected(client):
+    print('Connected to Adafruit IO!')
+
+def disconnected(client):
+    print('Disconnected from Adafruit IO!')
+    sys.exit(1)
+
+client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
+
+client.on_connect    = connected
+client.on_disconnect = disconnected
+
+client.connect()
+
+client.loop_background()
+
+while True:
+    hologram = HologramCloud(None, network='cellular')
+    location = hologram.network.location
+    client.publish('DemoFeed', value)
+    time.sleep(60)
