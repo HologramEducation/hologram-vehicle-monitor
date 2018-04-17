@@ -35,8 +35,8 @@ while True:
 
     cmd = obd.commands.SPEED # select an OBD command (sensor)
     response = connection.query(cmd) # send the command, and parse the response
-    
-    data = { 'location': location, 'speed': response.value.to("mph") }
 
-    client.publish('fleet', data)
+    data = { 'location': location, 'speed': response.value }
+
+    client.publish('fleet', str(data))
     time.sleep(60)
