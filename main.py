@@ -1,4 +1,5 @@
 import sys
+import time
 import obd
 
 # adafruitConfig.py should store your credentials
