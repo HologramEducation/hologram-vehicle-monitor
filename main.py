@@ -1,11 +1,8 @@
-# Import standard python modules.
-import random
 import sys
-import time
-
 import obd
 
-
+# adafruitConfig.py should store your credentials
+# ADAFRUIT_IO_KEY and ADAFRUIT_IO_USERNAME
 from adafruitConfig import *
 from Adafruit_IO import MQTTClient
 
@@ -31,12 +28,21 @@ client.loop_background()
 
 while True:
     hologram = HologramCloud(None, network='cellular')
-    location = hologram.network.location
 
     cmd = obd.commands.SPEED # select an OBD command (sensor)
-    response = connection.query(cmd) # send the command, and parse the response
+    obd_response = connection.query(cmd) # send the command, and parse the response
 
-    data = { 'location': str(location), 'speed': response.value }
+    location = hologram.network.location
+    if location is None:
+        data = { 'location': 'None', 'speed': obd_response.value }
+    else:
+        print 'Latitude: ' + str(location.latitude)
+        print 'Longitude: ' + str(location.longitude)
+        data = {
+                'location':
+                    { 'lat': str(location.latitude), 'lon': str(location.longitude)},
+                'speed': obd_response.value
+                }
 
     client.publish('fleet', str(data))
     time.sleep(60)
