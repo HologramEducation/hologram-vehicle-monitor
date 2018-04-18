@@ -46,4 +46,4 @@ while True:
                 }
 
     client.publish('fleet', str(data))
-    time.sleep(60)
+    time.sleep(120)
