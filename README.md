@@ -63,3 +63,9 @@ print(response.value) # returns unit-bearing values thanks to Pint
 ```
 
 ## Adafruit IO dashboard
+
+Dashboard set-up is similar to this guide https://cdn-learn.adafruit.com/downloads/pdf/adafruit-io-basics-gps.pdf
+
+To better understand the API and different ways to send data you can check out these docs https://learn.adafruit.com/adafruit-io/mqtt-api
+
+![example_dashboard](https://github.com/HologramEducation/hologram-vehicle-monitor/blob/master/dashboard.png)

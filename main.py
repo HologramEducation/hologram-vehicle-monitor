@@ -29,16 +29,24 @@ client.loop_background()
 
 while True:
     hologram = HologramCloud(None, network='cellular')
+    location = hologram.network.location
 
     cmd = obd.commands.SPEED # select an OBD command (sensor)
     obd_response = connection.query(cmd) # send the command, and parse the response
     obd_data = obd_response.value
 
-    location = hologram.network.location
-    lat = location.latitude
-    lon = location.longitude
+    if obd_data is None:
+        obd_data = 0
 
-    data = str(obd_data) + ',' + str(lat) + ',' + str(lon)
+    if location is None:
+        lat = 0
+        lon = 0
+    else:
+        lat = location.latitude
+        lon = location.longitude
 
-    client.publish('fleet', str(data))
+    data = str(obd_data) + ',' + str(lat) + ',' + str(lon) + ', 0'
+
+    print('Publishing: ' + str(data))
+    client.publish('fleet/csv', str(data))
     time.sleep(120)
