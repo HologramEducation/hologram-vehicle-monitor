@@ -32,18 +32,13 @@ while True:
 
     cmd = obd.commands.SPEED # select an OBD command (sensor)
     obd_response = connection.query(cmd) # send the command, and parse the response
+    obd_data = obd_response.value
 
     location = hologram.network.location
-    if location is None:
-        data = { 'location': 'None', 'speed': obd_response.value }
-    else:
-        print 'Latitude: ' + str(location.latitude)
-        print 'Longitude: ' + str(location.longitude)
-        data = {
-                'location':
-                    { 'lat': str(location.latitude), 'lon': str(location.longitude)},
-                'speed': obd_response.value
-                }
+    lat = location.latitude
+    lon = location.longitude
+
+    data = str(obd_data) + ',' + str(lat) + ',' + str(lon)
 
     client.publish('fleet', str(data))
     time.sleep(120)
