@@ -18,7 +18,7 @@ sudo pip install obd
 
 - Hologram NOVA https://hologram.io/nova/
 - Raspberry Pi 3
-- USB OBDII ELM327 Reader https://www.amazon.com/gp/product/B074V5YBYR/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1
+- USB OBDII ELM327 Reader https://www.amazon.com/gp/product/B005ZWM0R4/ref=oh_aui_detailpage_o00_s00?ie=UTF8&psc=1
 
 ## Run the Example
 

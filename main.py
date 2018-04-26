@@ -32,7 +32,7 @@ while True:
     location = hologram.network.location
 
     cmd = obd.commands.SPEED # select an OBD command (sensor)
-    obd_response = connection.query(cmd) # send the command, and parse the response
+    obd_response = connection.query(cmd, force=True) # send the command, and parse the response
     obd_data = obd_response.value
 
     if obd_data is None:
